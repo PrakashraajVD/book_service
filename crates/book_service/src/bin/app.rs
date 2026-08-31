@@ -1,4 +1,4 @@
-use book_service::routes;
+use book_service::{AppConf, AppState, routes};
 use tracing::info;
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
 
@@ -18,11 +18,14 @@ async fn main() -> anyhow::Result<()> {
         )
         .init();
 
-    let addr = String::from("0.0.0.0:3000");
+    let conf = AppConf::init();
+    let addr = conf.server.to_addr();
+    let server_conf = conf.server;
+    let state = AppState { server_conf };
     info!(addr=%addr, "Starting server");
 
     let listener = tokio::net::TcpListener::bind(&addr).await?;
-    let app = routes::init();
+    let app = routes::init(state);
     axum::serve(listener, app).await?;
 
     Ok(())
