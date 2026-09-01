@@ -20,3 +20,8 @@
 - Save above configuration `struct` inside `AppState` to use it to configure the server and
   middleware
 - Used `tower` and `tower-http` ecosystem to add `CORS(Cross Origin Resource Sharing), request ID` and `trace` middleware
+
+# Database Design
+
+- A simple postgres table named `books` is used
+- Mapped `TIMESTAMPTZ`, `DATE`, `UUID` types to `jiff::{Timestamp, civil::Date}`, `uuid::Uuid` Rust types

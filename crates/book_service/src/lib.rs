@@ -1,7 +1,8 @@
 mod config;
 mod state;
 
+pub mod models;
 pub mod routes;
 
-pub use config::{AppConf, ServerConf};
+pub use config::{AppConf, DbConf, ServerConf};
 pub use state::AppState;

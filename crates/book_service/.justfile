@@ -1,5 +1,7 @@
 export CARGO_TARGET_DIR := "../../target"
 
+db_host := "localhost"
+
 # List available commands
 help:
     @just --list --unsorted --list-heading $'BOOK-SERVICE\n'
@@ -29,3 +31,13 @@ test:
 app:
     @export $(grep -v '^#' .env | xargs) && \
     cargo run --bin app
+
+# Run DB migration CLI
+migration *cmd:
+    @export $(grep -v '^#' .env | xargs) && \
+    DB_HOST={{ db_host }} \
+    cargo run --bin migration -- migration {{ cmd }}
+
+# Run docker commands
+docker *cmd:
+    docker {{ cmd }}
