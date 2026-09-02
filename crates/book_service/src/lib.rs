@@ -1,6 +1,8 @@
 mod config;
+mod errors;
 mod state;
 
+pub mod app;
 pub mod models;
 pub mod routes;
 

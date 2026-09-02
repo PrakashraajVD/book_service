@@ -412,6 +412,7 @@ dependencies = [
  "axum",
  "envconfig",
  "jiff",
+ "serde",
  "thiserror",
  "toasty",
  "toasty-cli",

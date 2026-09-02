@@ -15,7 +15,7 @@ use tower_http::{
 };
 use tracing::{Span, info, info_span};
 
-use crate::AppState;
+use crate::{AppState, app};
 
 const REQUEST_ID_HEADER: &str = "x-request-id";
 
@@ -55,6 +55,7 @@ pub fn init(state: AppState) -> Router {
         .layer(cors_layer(&state));
     Router::new()
         .route("/livez", get(livez))
+        .nest("/v1/books", app::book::router())
         .layer(DefaultBodyLimit::max(state.server_conf.default_body_limit))
         .layer(middleware)
         .with_state(state)

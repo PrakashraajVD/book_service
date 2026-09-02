@@ -19,7 +19,8 @@ workspace = true
 anyhow = "1.0.104"
 axum = "0.8.9"
 envconfig = "0.11.1"
-jiff = "0.2.35"
+jiff = { version = "0.2.35", features = ["serde"] }
+serde = "1.0.229"
 thiserror = "2.0.20"
 toasty = { version = "0.10.0", features = ["postgresql", "migration", "jiff"] }
 toasty-cli = "0.10.0"
@@ -28,4 +29,4 @@ tower = "0.5.3"
 tower-http = { version = "0.7.1", features = ["cors", "request-id", "trace"] }
 tracing = "0.1.44"
 tracing-subscriber = { version = "0.3.23", features = ["json", "env-filter"] }
-uuid = { version = "1.26.0", features = ["v7", "fast-rng"] }
+uuid = { version = "1.26.0", features = ["v7", "fast-rng", "serde"] }

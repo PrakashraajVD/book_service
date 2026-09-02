@@ -30,6 +30,7 @@ test:
 # Run server app
 app:
     @export $(grep -v '^#' .env | xargs) && \
+    DB_HOST={{ db_host }} \
     cargo run --bin app
 
 # Run DB migration CLI

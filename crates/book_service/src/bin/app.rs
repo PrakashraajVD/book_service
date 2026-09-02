@@ -1,4 +1,4 @@
-use book_service::{AppConf, AppState, routes};
+use book_service::{AppConf, AppState, models::Book, routes};
 use tracing::info;
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
 
@@ -19,9 +19,15 @@ async fn main() -> anyhow::Result<()> {
         .init();
 
     let conf = AppConf::init();
+
+    let db = toasty::db::Db::builder()
+        .models(toasty::models!(Book))
+        .connect(&conf.db.to_database_url())
+        .await?;
+
     let addr = conf.server.to_addr();
     let server_conf = conf.server;
-    let state = AppState { server_conf };
+    let state = AppState { db, server_conf };
     info!(addr=%addr, "Starting server");
 
     let listener = tokio::net::TcpListener::bind(&addr).await?;
