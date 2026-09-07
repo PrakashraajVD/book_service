@@ -42,3 +42,7 @@ migration *cmd:
 # Run docker commands
 docker *cmd:
     docker {{ cmd }}
+
+# Generate openapi.yaml
+apidoc:
+    cargo run --bin apidoc

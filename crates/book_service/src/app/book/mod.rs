@@ -1,4 +1,5 @@
 use axum::{Router, routing::get};
+use utoipa::OpenApi;
 
 use crate::AppState;
 
@@ -15,3 +16,10 @@ pub fn router() -> Router<AppState> {
                 .delete(handler::delete),
         )
 }
+
+#[derive(OpenApi)]
+#[openapi(
+    paths(handler::list, handler::create, handler::read, handler::update, handler::delete),
+    components(schemas(payload::BookRequest))
+)]
+pub struct BookApi;

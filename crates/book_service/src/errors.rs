@@ -3,12 +3,26 @@ use axum::{
     http::{HeaderValue, Response, StatusCode, header},
     response::IntoResponse,
 };
+use utoipa::ToSchema;
 
+#[derive(ToSchema)]
+#[schema(examples(r#"{"error": "DB_FETCH_FAILED"}"#))]
+pub struct ErrorResponse {
+    #[expect(dead_code, reason = "OPENAPI YAML")]
+    pub error: Error,
+}
+
+#[derive(ToSchema)]
 pub enum Error {
+    #[schema(rename = "DB_INSERT_FAILED")]
     DbInsert,
+    #[schema(rename = "DB_FETCH_FAILED")]
     DbFetch,
+    #[schema(rename = "DB_UPDATE_FAILED")]
     DbUpdate,
+    #[schema(rename = "DB_DELETE_FAILED")]
     DbDelete,
+    #[serde(skip)]
     NotFound,
 }
 

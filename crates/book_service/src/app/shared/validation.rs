@@ -12,6 +12,7 @@ use garde::{
     with_i18n,
 };
 use serde::{Serialize, de::DeserializeOwned};
+use utoipa::ToSchema;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct ValidatedJson<T>(pub T);
@@ -31,7 +32,10 @@ where
     }
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, ToSchema)]
+#[schema(examples(
+    r#"{ "errors": { "image_url": "Must be a valid URL", "title": "Must be at least 1 character long" } }"#
+))]
 pub struct ValidationErrorResponse {
     pub errors: HashMap<String, String>,
 }
