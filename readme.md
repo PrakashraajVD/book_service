@@ -9,6 +9,7 @@ A RESTful book-management service built with Rust, Axum, PostgreSQL, and Toasty.
 - Database migrations managed by `toasty-cli`
 - Book CRUD endpoints
 - JSON request parsing and responses with Serde
+- Request validation with Garde for book create and update payloads
 - Pagination for book listings
 - Structured JSON logging with `tracing`
 - CORS, request IDs, request tracing, and body-size limits
@@ -148,6 +149,37 @@ Supported status values:
 ```text
 pending
 verified
+```
+
+#### Request Validation
+
+`POST /v1/books` and `PUT /v1/books/{id}` validate their JSON body before a
+handler writes to the database.
+
+| Field            | Rule                                                              |
+| ---------------- | ----------------------------------------------------------------- |
+| `title`          | Required; 1 to 255 characters                                     |
+| `image_url`      | Optional; when present, must be a valid URL                       |
+| `description`    | Optional; no additional validation                                |
+| `published_date` | Required and must be a valid date accepted by `jiff::civil::Date` |
+| `status`         | Required and must be `pending` or `verified`                      |
+
+Malformed JSON or values that cannot be deserialized return `400 Bad Request`.
+Validation failures return `422 Unprocessable Entity` with one message per
+invalid field:
+
+```http
+HTTP/1.1 422 Unprocessable Entity
+Content-Type: application/json
+```
+
+```json
+{
+  "errors": {
+    "title": "Must be at least 1 character long",
+    "image_url": "Must be a valid URL"
+  }
+}
 ```
 
 ### Update a Book

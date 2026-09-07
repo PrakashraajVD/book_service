@@ -9,7 +9,10 @@ use uuid::Uuid;
 
 use crate::{
     AppState,
-    app::{book::payload::BookRequest, shared::Pagination},
+    app::{
+        book::payload::BookRequest,
+        shared::{Pagination, ValidatedJson},
+    },
     errors::Error,
     models::Book,
 };
@@ -33,7 +36,7 @@ pub async fn list(
 
 pub async fn create(
     State(mut state): State<AppState>,
-    Json(payload): Json<BookRequest>,
+    ValidatedJson(payload): ValidatedJson<BookRequest>,
 ) -> Result<impl IntoResponse, Error> {
     let saved = toasty::create!(Book {
         title: payload.title,
@@ -74,7 +77,7 @@ pub async fn read(
 pub async fn update(
     State(mut state): State<AppState>,
     Path(id): Path<Uuid>,
-    Json(payload): Json<BookRequest>,
+    ValidatedJson(payload): ValidatedJson<BookRequest>,
 ) -> Result<impl IntoResponse, Error> {
     let mut book = Book::get_by_id(&mut state.db, id)
         .await

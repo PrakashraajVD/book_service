@@ -19,6 +19,7 @@ workspace = true
 anyhow = "1.0.104"
 axum = "0.8.9"
 envconfig = "0.11.1"
+garde = { version = "0.23.0", features = ["derive", "url"] }
 jiff = { version = "0.2.35", features = ["serde"] }
 serde = "1.0.229"
 thiserror = "2.0.20"
