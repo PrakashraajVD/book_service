@@ -104,6 +104,19 @@ just book app
 
 By default, the API listens on the port configured by `SERVER_PORT`.
 
+## OpenAPI Docs
+
+The API schema is generated from the Rust route annotations and can be regenerated with:
+
+```sh
+just book apidoc
+```
+
+The generated spec is stored in `crates/book_service/openapi.yaml` and the live service is published at:
+
+- https://book-service-pxm7.onrender.com
+- OpenAPI docs: https://book-service-pxm7.onrender.com/openapi.yaml
+
 ## API Endpoints
 
 | Method   | Path             | Description           |
