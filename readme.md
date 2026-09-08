@@ -2,6 +2,10 @@
 
 A RESTful book-management service built with Rust, Axum, PostgreSQL, and Toasty.
 
+**Live API:** https://book-service-pxm7.onrender.com/
+
+**Health Check:** https://book-service-pxm7.onrender.com/livez
+
 ## Features
 
 - Axum-based HTTP API
